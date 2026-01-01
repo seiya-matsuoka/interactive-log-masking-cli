@@ -14,6 +14,7 @@ class RuleValidatorTest {
 
   @TempDir Path tempDir;
 
+  // 正常な設定ではエラー一覧が空になることを確認する
   @Test
   void validate_ok_for_valid_config() throws Exception {
 
@@ -28,6 +29,7 @@ class RuleValidatorTest {
     assertTrue(errors.isEmpty(), "errors should be empty but was: " + errors);
   }
 
+  // 不正な正規表現を含む設定では、pattern に関するエラーが返ることを確認する
   @Test
   void validate_ng_for_invalid_pattern() throws Exception {
 
@@ -45,6 +47,11 @@ class RuleValidatorTest {
         "pattern error should exist: " + errors);
   }
 
+  /**
+   * src/test/resources 配下のファイル（fixture）を、テスト用の一時ディレクトリへコピーして Path を返す。
+   *
+   * <p>Validator テストでも「JSON → Config」の流れを使うため、クラスパスリソースを一旦ファイルへコピーする。
+   */
   private Path copyResourceToTemp(String resourcePath) throws Exception {
 
     Path dest = tempDir.resolve("rules.json");

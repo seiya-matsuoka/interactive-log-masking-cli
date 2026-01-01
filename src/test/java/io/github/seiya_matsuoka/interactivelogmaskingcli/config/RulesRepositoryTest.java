@@ -14,6 +14,7 @@ class RulesRepositoryTest {
 
   @TempDir Path tempDir;
 
+  // 正常なJSON（fixture）を読み込めることを確認する
   @Test
   void load_valid_rules_json() throws Exception {
 
@@ -28,6 +29,7 @@ class RulesRepositoryTest {
     assertEquals("email", config.getRules().get(0).getId());
   }
 
+  // save → load の往復で同等の内容が取得できることを確認する
   @Test
   void save_and_load_roundtrip() throws Exception {
 
@@ -56,6 +58,11 @@ class RulesRepositoryTest {
     assertEquals("id1", loaded.getRules().get(0).getId());
   }
 
+  /**
+   * src/test/resources 配下のファイル（fixture）を、テスト用の一時ディレクトリへコピーして Path を返す。
+   *
+   * <p>RulesRepository は Path を受け取って読み込むため、クラスパスリソースを一旦ファイルへコピーする。。
+   */
   private Path copyResourceToTemp(String resourcePath) throws Exception {
 
     Path dest = tempDir.resolve("rules.json");

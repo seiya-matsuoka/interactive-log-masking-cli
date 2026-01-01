@@ -101,6 +101,13 @@ public class RuleValidator {
     }
   }
 
+  /**
+   * ルール設定の flags（独自enum）を {@link java.util.regex.Pattern} のビットフラグ（int）に変換する。
+   *
+   * <p>{@link java.util.regex.Pattern} のフラグは int のビット演算（OR）で合成するため、 ここで List の内容を走査して合成する。
+   *
+   * <p>{@link RuleFlag#CASE_INSENSITIVE} のみを {@link java.util.regex.Pattern#CASE_INSENSITIVE}に変換する。
+   */
   private static int toPatternFlags(List<RuleFlag> flags) {
     int result = 0;
     if (flags == null) {
