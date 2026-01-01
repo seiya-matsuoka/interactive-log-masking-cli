@@ -1,5 +1,6 @@
 package io.github.seiya_matsuoka.interactivelogmaskingcli.config;
 
+import io.github.seiya_matsuoka.interactivelogmaskingcli.util.RegexFlagUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -83,7 +84,7 @@ public class RuleValidator {
       // pattern のコンパイルチェック（flags含む）
       if (!isBlank(rule.getPattern())) {
         try {
-          Pattern.compile(rule.getPattern(), toPatternFlags(rule.getFlags()));
+          Pattern.compile(rule.getPattern(), RegexFlagUtil.toPatternFlags(rule.getFlags()));
         } catch (PatternSyntaxException e) {
           errors.add(prefix + ".pattern の正規表現が不正です: " + e.getDescription());
         }
@@ -99,26 +100,6 @@ public class RuleValidator {
     if (!errors.isEmpty()) {
       throw new RuleValidationException(errors);
     }
-  }
-
-  /**
-   * ルール設定の flags（独自enum）を {@link java.util.regex.Pattern} のビットフラグ（int）に変換する。
-   *
-   * <p>{@link java.util.regex.Pattern} のフラグは int のビット演算（OR）で合成するため、 ここで List の内容を走査して合成する。
-   *
-   * <p>{@link RuleFlag#CASE_INSENSITIVE} のみを {@link java.util.regex.Pattern#CASE_INSENSITIVE}に変換する。
-   */
-  private static int toPatternFlags(List<RuleFlag> flags) {
-    int result = 0;
-    if (flags == null) {
-      return result;
-    }
-    for (RuleFlag flag : flags) {
-      if (flag == RuleFlag.CASE_INSENSITIVE) {
-        result |= Pattern.CASE_INSENSITIVE;
-      }
-    }
-    return result;
   }
 
   private static boolean isBlank(String s) {
