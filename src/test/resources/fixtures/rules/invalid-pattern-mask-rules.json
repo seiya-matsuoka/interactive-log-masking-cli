@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "id": "broken",
+      "name": "壊れた正規表現",
+      "enabled": true,
+      "pattern": "(",
+      "replacement": "[X]",
+      "flags": ["CASE_INSENSITIVE"]
+    }
+  ]
+}
