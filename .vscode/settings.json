@@ -12,5 +12,11 @@
   },
   "[groovy]": {
     "editor.defaultFormatter": "NicolasVuillamy.vscode-groovy-lint"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[bat]": {
+    "editor.defaultFormatter": "wwnao.bat-formatter"
   }
 }
