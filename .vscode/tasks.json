@@ -1,0 +1,41 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "gradle: run",
+      "type": "shell",
+      "command": "${workspaceFolder}/gradlew",
+      "args": ["run"],
+      "group": "build",
+      "problemMatcher": [],
+      "windows": {
+        "command": "${workspaceFolder}\\gradlew.bat",
+        "args": ["run"]
+      }
+    },
+    {
+      "label": "gradle: test",
+      "type": "shell",
+      "command": "${workspaceFolder}/gradlew",
+      "args": ["test"],
+      "group": "test",
+      "problemMatcher": [],
+      "windows": {
+        "command": "${workspaceFolder}\\gradlew.bat",
+        "args": ["test"]
+      }
+    },
+    {
+      "label": "gradle: build",
+      "type": "shell",
+      "command": "${workspaceFolder}/gradlew",
+      "args": ["build"],
+      "group": "build",
+      "problemMatcher": [],
+      "windows": {
+        "command": "${workspaceFolder}\\gradlew.bat",
+        "args": ["build"]
+      }
+    }
+  ]
+}

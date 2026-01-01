@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run App (interactive-log-masking-cli)",
+      "request": "launch",
+      "mainClass": "io.github.seiya_matsuoka.interactivelogmaskingcli.App",
+      "projectName": "interactive-log-masking-cli"
+    }
+  ]
+}
