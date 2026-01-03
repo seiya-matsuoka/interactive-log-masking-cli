@@ -47,7 +47,34 @@ public class FileMaskingService {
   }
 
   /**
-   * ルール設定JSONのパスを受け取り、input → out を実行する（いちばん基本の入口）。
+   * 実行計画（RunPlan）に従って input → out を実行する。
+   *
+   * <p>dryRun=true の場合は件数のみ集計し、ファイルは生成しない。
+   *
+   * @param plan 実行計画
+   * @return 実行レポート
+   */
+  public MaskRunReport run(RunPlan plan) throws IOException, RuleValidationException {
+
+    Objects.requireNonNull(plan, "plan");
+
+    // 1) ルール設定の取得（rulesPath なら JSON 読み込み / config ならそのまま）
+    MaskRulesConfig config =
+        (plan.rulesPath() != null) ? rulesRepository.load(plan.rulesPath()) : plan.config();
+
+    // 2) ルール検証（ここで RuleValidationException を投げる）
+    ruleValidator.validateOrThrow(config);
+
+    // 3) コンパイル済みのマスキングルール へ変換
+    List<MaskRule> compiledRules = ruleCompiler.compile(config);
+
+    // 4) ファイル処理（input -> out）
+    return fileProcessor.process(
+        plan.inputPath(), plan.outputBase(), compiledRules, plan.suffix(), plan.dryRun());
+  }
+
+  /**
+   * ルール設定JSONのパスを受け取り、input → out を実行する。
    *
    * @param inputPath 入力（ファイル or ディレクトリ）
    * @param outputBase out/ のような出力ベース
@@ -57,14 +84,8 @@ public class FileMaskingService {
    */
   public MaskRunReport maskToOut(Path inputPath, Path outputBase, Path rulesPath, String suffix)
       throws IOException, RuleValidationException {
-
-    Objects.requireNonNull(rulesPath, "rulesPath");
-
-    // 1) JSON読み込み
-    MaskRulesConfig config = rulesRepository.load(rulesPath);
-
-    // 2) 実行（validate → compile → file processing）
-    return maskToOut(inputPath, outputBase, config, suffix);
+    RunPlan plan = RunPlan.ofRulesPath(inputPath, outputBase, rulesPath, suffix, false);
+    return run(plan);
   }
 
   /**
@@ -81,18 +102,7 @@ public class FileMaskingService {
   public MaskRunReport maskToOut(
       Path inputPath, Path outputBase, MaskRulesConfig config, String suffix)
       throws IOException, RuleValidationException {
-
-    Objects.requireNonNull(inputPath, "inputPath");
-    Objects.requireNonNull(outputBase, "outputBase");
-    Objects.requireNonNull(config, "config");
-
-    // 1) ルール検証（ここで RuleValidationException を投げる）
-    ruleValidator.validateOrThrow(config);
-
-    // 2) コンパイル済みのマスキングルール へ変換
-    List<MaskRule> compiledRules = ruleCompiler.compile(config);
-
-    // 3) ファイル処理（input -> out）
-    return fileProcessor.process(inputPath, outputBase, compiledRules, suffix);
+    RunPlan plan = RunPlan.ofConfig(inputPath, outputBase, config, suffix, false);
+    return run(plan);
   }
 }
