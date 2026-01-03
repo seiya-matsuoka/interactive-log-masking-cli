@@ -110,14 +110,14 @@ public class FileMaskingProcessor {
    *
    * <p>処理は行単位で行う。
    *
-   * <p>改行コードは writer.newLine() で環境依存になるが、許容する。
-   *
-   * <p>dryRun=true の場合は writer を作らず、件数集計のみ行う。
+   * <p>dryRun=true の場合は writer を作らず、件数集計のみ行う（出力ファイルは生成しない）。
    *
    * @param inputFile 入力ファイル
    * @param outputFile 出力ファイル（必要に応じて親ディレクトリを作成）
    * @param rules コンパイル済みルール
+   * @param dryRun true: 件数集計のみ（出力ファイルは生成しない）
    * @return ファイル単位の処理結果
+   * @throws IOException 入出力エラー
    */
   private MaskedFileReport processSingleFile(
       Path inputFile, Path outputFile, List<MaskRule> rules, boolean dryRun) throws IOException {
