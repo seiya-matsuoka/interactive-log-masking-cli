@@ -20,6 +20,7 @@ class InputFileCollectorTest {
     Path nested = inputBase.resolve("a/b");
     Files.createDirectories(nested);
 
+    // 2ファイルを用意（ネスト1件 + 直下1件）
     Files.writeString(nested.resolve("app.log"), "x\n", StandardCharsets.UTF_8);
     Files.writeString(inputBase.resolve("root.log"), "y\n", StandardCharsets.UTF_8);
 
@@ -27,6 +28,8 @@ class InputFileCollectorTest {
     List<InputFileRef> refs = collector.collect(inputBase);
 
     assertEquals(2, refs.size());
+
+    // Windowsでも比較しやすいように区切りを正規化する
     assertTrue(
         refs.stream()
             .anyMatch(r -> r.relative().toString().replace('\\', '/').equals("a/b/app.log")));

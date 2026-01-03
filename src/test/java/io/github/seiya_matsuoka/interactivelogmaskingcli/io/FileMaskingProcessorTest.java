@@ -22,6 +22,7 @@ class FileMaskingProcessorTest {
     Path nested = inputBase.resolve("a/b");
     Files.createDirectories(nested);
 
+    // 入力ファイルを用意（メールアドレスをマスク対象にする）
     Path inFile = nested.resolve("app.log");
     Files.writeString(inFile, "mail=a@example.com\n", StandardCharsets.UTF_8);
 
@@ -39,12 +40,15 @@ class FileMaskingProcessorTest {
     FileMaskingProcessor processor = new FileMaskingProcessor();
     var report = processor.process(inputBase, outBase, List.of(email), "_masked");
 
+    // out/a/b/app_masked.log が生成されること（構造維持 + suffix）
     Path expectedOut = outBase.resolve("a/b/app_masked.log");
     assertTrue(Files.exists(expectedOut));
 
+    // 内容がマスクされていること
     String outText = Files.readString(expectedOut, StandardCharsets.UTF_8);
     assertTrue(outText.contains("[MASKED_EMAIL]"));
 
+    // レポートの集計も最低限チェック
     assertEquals(1, report.files().size());
     assertEquals(1L, report.totalCount());
     assertEquals(1L, report.totalPerRule().get("email"));
@@ -68,9 +72,11 @@ class FileMaskingProcessorTest {
     Path expectedOut = outBase.resolve("single.log");
     assertTrue(Files.exists(expectedOut));
 
+    // 置換されていること
     String outText = Files.readString(expectedOut, StandardCharsets.UTF_8);
     assertTrue(outText.contains("token=[MASKED]"));
 
+    // 件数の最低限チェック
     assertEquals(1, report.files().size());
     assertEquals(1L, report.totalCount());
   }
