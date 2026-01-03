@@ -19,6 +19,7 @@ public class InputFileCollector {
   public List<InputFileRef> collect(Path inputPath) throws IOException {
 
     if (Files.isRegularFile(inputPath)) {
+      // 単一ファイル入力の場合、relative はファイル名のみとする（outBase直下に出すため）
       return List.of(new InputFileRef(inputPath, inputPath.getFileName()));
     }
 
@@ -26,9 +27,12 @@ public class InputFileCollector {
       throw new IllegalArgumentException("inputPath はファイルまたはディレクトリである必要があります: " + inputPath);
     }
 
+    // Files.walk でディレクトリ配下を再帰的に探索する（Streamなので try-with-resources で確実にcloseする）
     try (var stream = Files.walk(inputPath)) {
       return stream
+          // ディレクトリ配下の通常ファイルだけを処理対象にする
           .filter(Files::isRegularFile)
+          // inputBase からの相対パスを保持しておく（out配下の構造維持に使う）
           .map(p -> new InputFileRef(p, inputPath.relativize(p)))
           // 出力順を安定させる（テストしやすいため）
           .sorted(Comparator.comparing(ref -> ref.relative().toString()))
