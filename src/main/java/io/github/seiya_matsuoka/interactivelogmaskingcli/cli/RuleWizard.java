@@ -31,16 +31,16 @@ public class RuleWizard {
     int choice = prompter.askChoice("ルールの指定方法を選んでください", List.of("JSON設定ファイルを使う", "対話でルールを作成する"), 1);
 
     if (choice == 1) {
-      Path rulesPath = prompter.askPath("ルールJSONのパス", defaultRulesPath);
+      Path rulesPath = prompter.askPath("使用するルールJSONファイルのパスを入力してください", defaultRulesPath);
       return RuleSource.ofRulesPath(rulesPath);
     }
 
     // 対話形式でルールを作る
     MaskRulesConfig config = createConfigInteractively();
 
-    boolean save = prompter.askYesNo("作成したルールをJSONファイルに保存しますか？", true);
+    boolean save = prompter.askYesNo("作成したルールをJSONファイルとして保存しますか？", true);
     if (save) {
-      Path savePath = prompter.askPath("保存先ルールJSONのパス", defaultRulesPath);
+      Path savePath = prompter.askPath("ルールJSONファイルの保存先パスを入力してください", defaultRulesPath);
       if (savePath.getParent() != null) {
         Files.createDirectories(savePath.getParent());
       }
@@ -60,18 +60,18 @@ public class RuleWizard {
     while (true) {
       MaskRuleConfig r = new MaskRuleConfig();
 
-      r.setId(prompter.askNonBlank("rule.id（例: email）"));
-      r.setName(prompter.askString("rule.name（表示名）", r.getId()));
+      r.setId(prompter.askNonBlank("ルールIDを入力してください（例: email）"));
+      r.setName(prompter.askString("ルール名（表示名）を入力してください", r.getId()));
 
-      boolean enabled = prompter.askYesNo("このルールを有効にしますか？", true);
+      boolean enabled = prompter.askYesNo("このルールを「有効」にしますか？", true);
       r.setEnabled(enabled);
 
-      r.setPattern(prompter.askNonBlank("pattern（正規表現）"));
-      r.setReplacement(prompter.askNonBlank("replacement（置換文字列）"));
+      r.setPattern(prompter.askNonBlank("マスキング対象の正規表現（pattern）を入力してください"));
+      r.setReplacement(prompter.askNonBlank("置換文字列（replacement）を入力してください"));
 
       // flags は簡易に「カンマ区切り」を採用（例: CASE_INSENSITIVE,MULTILINE）
-      String flagHint = "flags（任意、カンマ区切り。例: CASE_INSENSITIVE。空で無し）";
-      String rawFlags = prompter.askString(flagHint, "");
+      String rawFlags =
+          prompter.askString("フラグを入力してください（任意、カンマ区切り。例: CASE_INSENSITIVE。空Enterで: なし）", "");
       r.setFlags(parseFlags(rawFlags));
 
       rules.add(r);
