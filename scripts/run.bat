@@ -3,6 +3,6 @@ setlocal
 
 cd  /d "%~dp0.."
 
-call gradlew.bat -q run
+call gradlew.bat --console=plain run
 
 endlocal

@@ -3,4 +3,4 @@ set -eu
 
 cd "$(dirname "$0")/.."
 
-./gradlew -q run
+./gradlew --console=plain run
