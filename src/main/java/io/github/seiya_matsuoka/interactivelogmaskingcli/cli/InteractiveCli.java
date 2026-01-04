@@ -56,7 +56,7 @@ public class InteractiveCli {
       RunPlan plan = askRunPlan();
       out.println();
 
-      boolean ok = prompter.askYesNo("この内容で実行しますか？", true);
+      boolean ok = prompter.askYesNo("上記の内容で実行しますか？", true);
       if (!ok) {
         out.println("中止しました。");
         return;
@@ -94,17 +94,17 @@ public class InteractiveCli {
     Path defaultRules = Path.of("rules").resolve("mask-rules.json");
 
     // 1) 入力/出力
-    Path inputPath = prompter.askPath("入力パス（ファイル or ディレクトリ）", defaultInput);
-    Path outputBase = prompter.askPath("出力先ディレクトリ（out配下）", defaultOut);
+    Path inputPath = prompter.askPath("入力ファイル/ディレクトリのパスを入力してください", defaultInput);
+    Path outputBase = prompter.askPath("出力先ディレクトリのパスを入力してください", defaultOut);
 
     // 2) dryRun
-    boolean dryRun = prompter.askYesNo("dryRun（件数集計のみ。ファイルは生成しない）にしますか？", false);
+    boolean dryRun = prompter.askYesNo("dryRun（ファイルは生成せず件数集計のみ）で実行しますか？", false);
 
     // 3) サフィックス
     boolean useSuffix = prompter.askYesNo("出力ファイル名にサフィックスを付与しますか？", true);
     String suffix = "";
     if (useSuffix) {
-      suffix = prompter.askString("サフィックス（例: _masked）", "_masked");
+      suffix = prompter.askString("付与するサフィックスを入力してください（例: _masked）", "_masked");
     }
 
     // 4) ルール指定
