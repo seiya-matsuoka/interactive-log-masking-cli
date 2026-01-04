@@ -28,9 +28,10 @@ public class ConsolePrompter {
       String prompt =
           (defaultValue == null || defaultValue.isBlank())
               ? String.format("%s: ", label)
-              : String.format("%s (default: %s): ", label, defaultValue);
+              : String.format("%s（空Enterで: %s）: ", label, defaultValue);
 
       out.print(prompt);
+      out.flush();
 
       String line = readLine();
       if (line.isBlank()) {
@@ -49,6 +50,8 @@ public class ConsolePrompter {
   public String askNonBlank(String label) {
     while (true) {
       out.print(label + ": ");
+      out.flush();
+
       String line = readLine();
       if (line.isBlank()) {
         out.println("  空は不可です。入力してください。");
@@ -60,9 +63,11 @@ public class ConsolePrompter {
 
   /** Yes/No 質問。 */
   public boolean askYesNo(String label, boolean defaultYes) {
+    String defaultText = defaultYes ? "はい" : "いいえ";
+
     while (true) {
-      String hint = defaultYes ? "[Y/n]" : "[y/N]";
-      out.print(label + " " + hint + ": ");
+      out.print(label + "（y/n、空Enterで: " + defaultText + "）: ");
+      out.flush();
 
       String raw = readLine().trim().toLowerCase(Locale.ROOT);
 
@@ -102,7 +107,9 @@ public class ConsolePrompter {
     }
 
     while (true) {
-      out.printf("選択してください (default: %d): ", defaultIndex1Based);
+      out.printf("番号を入力してください（空Enterで: %d）: ", defaultIndex1Based);
+      out.flush();
+
       String raw = readLine().trim();
 
       if (raw.isEmpty()) {
