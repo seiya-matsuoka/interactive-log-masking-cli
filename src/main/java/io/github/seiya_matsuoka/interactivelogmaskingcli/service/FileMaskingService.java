@@ -8,6 +8,7 @@ import io.github.seiya_matsuoka.interactivelogmaskingcli.config.RulesRepository;
 import io.github.seiya_matsuoka.interactivelogmaskingcli.core.MaskRule;
 import io.github.seiya_matsuoka.interactivelogmaskingcli.io.FileMaskingProcessor;
 import io.github.seiya_matsuoka.interactivelogmaskingcli.report.MaskRunReport;
+import io.github.seiya_matsuoka.interactivelogmaskingcli.report.ReportWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -24,6 +25,7 @@ public class FileMaskingService {
   private final RuleValidator ruleValidator;
   private final MaskRuleCompiler ruleCompiler;
   private final FileMaskingProcessor fileProcessor;
+  private final ReportWriter reportWriter;
 
   /** 既定の実装を組み立てる（本番/手動実行向け）。 */
   public FileMaskingService() {
@@ -31,7 +33,8 @@ public class FileMaskingService {
         new RulesRepository(),
         new RuleValidator(),
         new MaskRuleCompiler(),
-        new FileMaskingProcessor());
+        new FileMaskingProcessor(),
+        new ReportWriter());
   }
 
   /** DI（テスト等）用コンストラクタ。 */
@@ -39,11 +42,13 @@ public class FileMaskingService {
       RulesRepository rulesRepository,
       RuleValidator ruleValidator,
       MaskRuleCompiler ruleCompiler,
-      FileMaskingProcessor fileProcessor) {
+      FileMaskingProcessor fileProcessor,
+      ReportWriter reportWriter) {
     this.rulesRepository = rulesRepository;
     this.ruleValidator = ruleValidator;
     this.ruleCompiler = ruleCompiler;
     this.fileProcessor = fileProcessor;
+    this.reportWriter = reportWriter;
   }
 
   /**
@@ -58,6 +63,8 @@ public class FileMaskingService {
 
     Objects.requireNonNull(plan, "plan");
 
+    long started = System.nanoTime();
+
     // 1) ルール設定の取得（rulesPath なら JSON 読み込み / config ならそのまま）
     MaskRulesConfig config =
         (plan.rulesPath() != null) ? rulesRepository.load(plan.rulesPath()) : plan.config();
@@ -69,8 +76,16 @@ public class FileMaskingService {
     List<MaskRule> compiledRules = ruleCompiler.compile(config);
 
     // 4) ファイル処理（input -> out）
-    return fileProcessor.process(
-        plan.inputPath(), plan.outputBase(), compiledRules, plan.suffix(), plan.dryRun());
+    MaskRunReport report =
+        fileProcessor.process(
+            plan.inputPath(), plan.outputBase(), compiledRules, plan.suffix(), plan.dryRun());
+
+    long durationMs = (System.nanoTime() - started) / 1_000_000L;
+
+    // report-*.json を out/ に出力（dryRun でも出力する）
+    reportWriter.write(plan, config, report, durationMs);
+
+    return report;
   }
 
   /**
