@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "id": "email",
+      "name": "Email",
+      "enabled": true,
+      "pattern": "(?i)\\bemail=([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,})\\b",
+      "replacement": "email=[MASKED_EMAIL]",
+      "flags": []
+    },
+    {
+      "id": "ip",
+      "name": "IP (IPv4)",
+      "enabled": true,
+      "pattern": "\\b(?:ip|clientIp)=((?:\\d{1,3}\\.){3}\\d{1,3})\\b",
+      "replacement": "clientIp=[MASKED_IP]",
+      "flags": []
+    },
+    {
+      "id": "token",
+      "name": "Token",
+      "enabled": true,
+      "pattern": "\\btoken=([A-Za-z0-9._-]{8,})\\b",
+      "replacement": "token=[MASKED_TOKEN]",
+      "flags": []
+    },
+    {
+      "id": "bearer",
+      "name": "Authorization Bearer",
+      "enabled": true,
+      "pattern": "(?i)Authorization=\"?Bearer\\s+([A-Za-z0-9._-]{8,})\"?",
+      "replacement": "Authorization=\"Bearer [MASKED_BEARER]\"",
+      "flags": []
+    }
+  ]
+}
