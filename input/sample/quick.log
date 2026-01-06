@@ -1,0 +1,5 @@
+2026-01-05T09:00:01.120+09:00 INFO  app=demo service=web env=dev msg="start request" requestId=7f4e3b2b-9b1a-4b6b-a2ff-2ed26a8c6a31 userId=10001 sessionId=sess_4caa9b5b ip=203.0.113.10 email=alice@example.com
+2026-01-05T09:00:01.201+09:00 INFO  app=demo service=web msg="auth ok" requestId=7f4e3b2b-9b1a-4b6b-a2ff-2ed26a8c6a31 Authorization="Bearer tok_demo_9b5a3c2f_abcdef0123456789"
+2026-01-05T09:00:01.322+09:00 INFO  app=demo service=api msg="GET /v1/profile" requestId=7f4e3b2b-9b1a-4b6b-a2ff-2ed26a8c6a31 status=200 latencyMs=54 clientIp=198.51.100.23 userAgent="Mozilla/5.0"
+2026-01-05T09:00:01.480+09:00 WARN  app=demo service=api msg="rate limit warning" requestId=7f4e3b2b-9b1a-4b6b-a2ff-2ed26a8c6a31 userId=10001 ip=203.0.113.10
+2026-01-05T09:00:01.615+09:00 INFO  app=demo service=job msg="batch finished" jobId=job_0001 durationMs=312 accountId=acc_90001 tenantId=tenant_01 employeeNo=E-10293

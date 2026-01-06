@@ -1,0 +1,4 @@
+2026-01-05T14:20:00.000+09:00 INFO  service=db msg="SQL" requestId=6b5f4a3c-2d1e-0f9a-8b7c-6d5e4f3a2b1c sql="SELECT * FROM users WHERE user_id=10001"
+2026-01-05T14:20:00.010+09:00 INFO  service=db msg="SQL" requestId=6b5f4a3c-2d1e-0f9a-8b7c-6d5e4f3a2b1c sql="UPDATE users SET last_login_at='2026-01-05T14:20:00+09:00' WHERE user_id=10001"
+2026-01-05T14:20:00.020+09:00 INFO  service=db msg="conn" dbUrl=jdbc:postgresql://db-internal-01:5432/appdb?sslmode=disable
+2026-01-05T14:20:00.030+09:00 WARN  service=db msg="slow query" latencyMs=1200 requestId=77777777-8888-9999-aaaa-bbbbbbbbbbbb clientIp=192.0.2.77

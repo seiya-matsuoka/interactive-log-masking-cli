@@ -1,0 +1,10 @@
+2026-01-05T11:01:00.001+09:00 INFO  service=auth msg="認証処理を開始しました" requestId=1c2d3e4f-1111-4bbb-8ccc-222233334444 clientIp=203.0.113.12
+2026-01-05T11:01:00.050+09:00 INFO  service=auth msg="入力検証OK" requestId=1c2d3e4f-1111-4bbb-8ccc-222233334444 email=alice@example.com
+2026-01-05T11:01:00.070+09:00 INFO  service=auth msg="lookup user" requestId=1c2d3e4f-1111-4bbb-8ccc-222233334444 userId=10001 tenantId=tenant_01
+2026-01-05T11:01:00.090+09:00 WARN  service=auth msg="認証に失敗しました" requestId=1c2d3e4f-1111-4bbb-8ccc-222233334444 email=alice@example.com reason="locked"
+2026-01-05T11:01:00.110+09:00 INFO  service=auth msg="audit" requestId=1c2d3e4f-1111-4bbb-8ccc-222233334444 ip=203.0.113.12 userAgent="Mozilla/5.0"
+
+2026-01-05T11:10:10.010+09:00 INFO  service=auth msg="認証処理を開始しました" requestId=9999aaaa-bbbb-4ccc-8ddd-eeeeffff0000 clientIp=198.51.100.99
+2026-01-05T11:10:10.060+09:00 INFO  service=auth msg="login ok" requestId=9999aaaa-bbbb-4ccc-8ddd-eeeeffff0000 email=bob@example.com userId=10002
+2026-01-05T11:10:10.061+09:00 INFO  service=auth msg="set-cookie" requestId=9999aaaa-bbbb-4ccc-8ddd-eeeeffff0000 sessionId=sess_aa11bb22cc33
+2026-01-05T11:10:10.070+09:00 INFO  service=auth msg="issue bearer" requestId=9999aaaa-bbbb-4ccc-8ddd-eeeeffff0000 Authorization="Bearer tok_auth_02_abcdefabcdefabcdefabcdef"

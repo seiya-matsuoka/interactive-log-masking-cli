@@ -1,0 +1,6 @@
+2026-01-05T13:10:00.001+09:00 ERROR service=api msg="failed to call upstream" requestId=76a2c4df-0f4e-4a91-ae45-9dbd4c55d2a1 clientIp=198.51.100.11 userId=10012 email=user10012@example.com
+2026-01-05T13:10:00.002+09:00 ERROR service=api msg="upstream=inventory timeout=3000ms url=https://api.example.invalid/v1/items"
+2026-01-05T13:10:00.003+09:00 ERROR service=api msg="Authorization: Bearer tok_up_03_0123456789abcdef0123456789"
+2026-01-05T13:10:00.004+09:00 ERROR service=api msg="stacktrace: java.net.SocketTimeoutException: Read timed out"
+2026-01-05T13:10:00.005+09:00 ERROR service=api msg="at com.example.UpstreamClient.get(UpstreamClient.java:88)"
+2026-01-05T13:10:00.006+09:00 ERROR service=api msg="at com.example.ApiService.fetch(ApiService.java:54)"

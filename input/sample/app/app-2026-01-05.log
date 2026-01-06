@@ -1,0 +1,20 @@
+2026-01-05T10:12:00.010+09:00 INFO  app=interactive-log-masking-cli-demo env=dev host=svc-internal-01 msg="boot start"
+2026-01-05T10:12:00.112+09:00 INFO  app=demo service=web msg="incoming request" method=GET path=/ health=true requestId=0d6e9f0a-7b92-4c9d-8d8d-1d7b8c9f1f21 clientIp=203.0.113.11
+2026-01-05T10:12:00.131+09:00 INFO  app=demo service=web msg="session created" requestId=0d6e9f0a-7b92-4c9d-8d8d-1d7b8c9f1f21 sessionId=sess_7b2d0e1a userId=10002 email=bob@example.com
+2026-01-05T10:12:00.200+09:00 INFO  app=demo service=api msg="GET /v1/items" requestId=0d6e9f0a-7b92-4c9d-8d8d-1d7b8c9f1f21 status=200 latencyMs=32
+2026-01-05T10:12:00.231+09:00 INFO  app=demo service=api msg="items returned" requestId=0d6e9f0a-7b92-4c9d-8d8d-1d7b8c9f1f21 count=3
+
+2026-01-05T10:15:10.003+09:00 INFO  app=demo service=web msg="incoming request" method=POST path=/v1/login requestId=5d3c8e1d-1ff0-4bd0-9c91-7b5f6cb8c240 clientIp=198.51.100.20
+2026-01-05T10:15:10.050+09:00 WARN  app=demo service=auth msg="login failed" requestId=5d3c8e1d-1ff0-4bd0-9c91-7b5f6cb8c240 email=charlie@example.com reason="invalid password"
+2026-01-05T10:15:10.070+09:00 INFO  app=demo service=auth msg="audit" requestId=5d3c8e1d-1ff0-4bd0-9c91-7b5f6cb8c240 ip=198.51.100.20 userAgent="curl/8.4.0"
+
+2026-01-05T10:18:42.101+09:00 INFO  app=demo service=web msg="incoming request" method=POST path=/v1/login requestId=2f9d1f56-8a6a-4c7b-9d9b-1d8f1f2d9f00 clientIp=203.0.113.50
+2026-01-05T10:18:42.160+09:00 INFO  app=demo service=auth msg="login ok" requestId=2f9d1f56-8a6a-4c7b-9d9b-1d8f1f2d9f00 email=dan@example.com userId=10003
+2026-01-05T10:18:42.161+09:00 INFO  app=demo service=auth msg="token issued" requestId=2f9d1f56-8a6a-4c7b-9d9b-1d8f1f2d9f00 token=tok_live_01_0123456789abcdef0123456789abcdef
+2026-01-05T10:18:42.200+09:00 INFO  app=demo service=api msg="GET /v1/me" requestId=2f9d1f56-8a6a-4c7b-9d9b-1d8f1f2d9f00 status=200 latencyMs=20
+
+2026-01-05T10:30:05.020+09:00 ERROR app=demo service=api msg="unexpected error" requestId=ad3c2a10-3f61-4f76-9c6a-6e9f8a2a1c10 userId=10003 email=dan@example.com
+2026-01-05T10:30:05.021+09:00 ERROR app=demo service=api msg="java.lang.IllegalStateException: demo failure"
+2026-01-05T10:30:05.022+09:00 ERROR app=demo service=api msg="at com.example.DemoController.get(DemoController.java:42)"
+2026-01-05T10:30:05.023+09:00 ERROR app=demo service=api msg="at com.example.App.main(App.java:10)"
+2026-01-05T10:30:05.100+09:00 INFO  app=demo service=web msg="request finished" requestId=ad3c2a10-3f61-4f76-9c6a-6e9f8a2a1c10 status=500 latencyMs=91 clientIp=203.0.113.50

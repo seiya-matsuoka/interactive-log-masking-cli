@@ -1,0 +1,8 @@
+2026-01-05T12:00:00.000+09:00 INFO  service=api msg="GET /v1/users" requestId=11111111-2222-3333-4444-555555555555 status=200 latencyMs=18 clientIp=203.0.113.13 userId=10010
+2026-01-05T12:00:00.050+09:00 INFO  service=api msg="GET /v1/users/10010" requestId=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee status=200 latencyMs=25 clientIp=203.0.113.13 userId=10010 email=user10010@example.com
+
+2026-01-05T12:01:10.010+09:00 INFO  service=api msg="POST /v1/orders" requestId=123e4567-e89b-12d3-a456-426614174000 status=201 latencyMs=42 clientIp=198.51.100.10 userId=10011
+2026-01-05T12:01:10.011+09:00 INFO  service=api msg="order created" requestId=123e4567-e89b-12d3-a456-426614174000 orderId=ord_0000123 accountId=acc_91001 tenantId=tenant_02
+
+2026-01-05T12:02:20.020+09:00 WARN  service=api msg="slow request" requestId=0f0e0d0c-0b0a-0908-0706-050403020100 status=200 latencyMs=1250 clientIp=203.0.113.13 userAgent="Mozilla/5.0"
+2026-01-05T12:03:30.030+09:00 INFO  service=api msg="GET /v1/health" requestId=deadbeef-dead-beef-dead-beefdeadbeef status=200 latencyMs=3 clientIp=192.0.2.44
