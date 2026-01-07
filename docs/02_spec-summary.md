@@ -1,4 +1,6 @@
-# interactive-log-masking-cli ｜仕様まとめ
+# 仕様まとめ
+
+> このドキュメントは、**interactive-log-masking-cli** の仕様をまとめたもの。
 
 ## 1. アプリ概要
 

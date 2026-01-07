@@ -1,6 +1,6 @@
 # 設計
 
-このドキュメントは、**interactive-log-masking-cli** の設計をまとめたもの。
+> このドキュメントは、**interactive-log-masking-cli** の設計をまとめたもの。
 
 ## 1. 全体アーキテクチャ方針
 
