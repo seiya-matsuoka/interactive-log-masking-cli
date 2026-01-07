@@ -147,3 +147,44 @@
   - **出力ファイルは生成しない**（書き込みを行わない）
 
 ---
+
+## 8. レポート仕様（out/report-\*.json）
+
+### 8.1 出力先・ファイル名
+
+- `out/` 配下に毎回新規で出力する
+- 形式: `report-YYYYMMDD-HHMMSS-SSS.json`
+- 同名衝突の可能性がある場合は、連番のような形で回避して一意な名前にする
+
+### 8.2 レポートに含める内容
+
+ログ本文そのものや「置換前後のサンプル」は含めず、件数やパス中心で出力する。
+
+- schemaVersion
+- generatedAt（生成日時）
+- durationMs（実行時間）
+- dryRun（true/false）
+- inputRoot / outRoot
+- rulesSource（ルール指定元。例: ルール JSON のパス）
+- suffix（有効な場合）
+- totalFiles（対象ファイル数）
+- totalCount（合計置換件数）
+- totalCountsPerRule（ルール別合計件数）
+- rulesMeta（id → name）
+- fileReports（ファイル別）
+  - inputFile（入力ファイル）
+  - outputFile（出力先ファイル。dryRun でも「出力予定パス」として記録）
+  - totalCount（ファイル単位の合計件数）
+  - countsPerRule（ルール別件数）
+
+---
+
+## 9. エラー時の扱い
+
+- ルール検証エラーやファイル I/O エラーなどは例外として扱い、処理は中断される
+
+---
+
+## 10. 運用・安全上の注意
+
+- 入力ログは**コピーを使う**ことを推奨（入力は改変しないが、運用上の安全のため）
