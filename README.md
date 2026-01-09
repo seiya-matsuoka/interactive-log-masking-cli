@@ -19,6 +19,14 @@ dryRun（件数集計のみ）にも対応し、実行結果レポート（`out/
 
 ---
 
+## リリース（ダウンロード）
+
+[![Open Releases](https://img.shields.io/badge/Release-latest-2ea44f?logo=github)](https://github.com/seiya-matsuoka/interactive-log-masking-cli/releases/latest)
+
+- [`最新版URL`](https://github.com/seiya-matsuoka/interactive-log-masking-cli/releases/latest)：`https://github.com/seiya-matsuoka/interactive-log-masking-cli/releases/latest`
+
+---
+
 ## 主な機能
 
 - **入力**：単一ファイル / ディレクトリ再帰
