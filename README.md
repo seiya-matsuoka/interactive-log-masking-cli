@@ -27,6 +27,38 @@ dryRun（件数集計のみ）にも対応し、実行結果レポート（`out/
 
 ---
 
+## スクリーンショット
+
+1. 実行前の `input/`, `out/`, `rules/` の内容
+   ![help](docs/screenshots/01-before-work.png)
+
+2. コマンド起動から対話の流れと実行計画の表示
+   ![help](docs/screenshots/02-run.png)
+
+3. 実行後の結果表示
+   ![init --force](docs/screenshots/03-result.png)
+
+4. 実行後の `input/`, `out/`, `rules/` の内容
+   ![01-run](docs/screenshots/04-after-work.png)
+
+5. マスキング前後（実行前後）のサンプルログの比較 ①
+
+- マスキング前（実行前）
+  ![02-input](docs/screenshots/05-befor-applog.png)
+
+- マスキング後（実行後）
+  ![03-out](docs/screenshots/06-after-applog.png)
+
+6. マスキング前後（実行前後）のサンプルログの比較 ②
+
+- マスキング前（実行前）
+  ![04-dryrun](docs/screenshots/07-befor-batchlog.png)
+
+- マスキング後（実行後）
+  ![05-suffix](docs/screenshots/08-after-batchlog.png)
+
+---
+
 ## 主な機能
 
 - **入力**：単一ファイル / ディレクトリ再帰
